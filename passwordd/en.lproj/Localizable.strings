@@ -1,0 +1,27 @@
+/*
+  Localizable.strings
+  passwordd
+
+  Created by 日置大智 on 2015/04/30.
+  Copyright (c) 2015年 hiokidaichi. All rights reserved.
+*/
+Error="Error";
+Later = "Later";
+CharacterTypeExpansion = "Character Type";
+IncludeNumber = "Include Number";
+IncludeNumberDescription = "1234567890";
+IncludeLowerCaseSign = "Include Sign";
+IncludeLowerCaseSignDescription = "-^\\@[;:],./";
+LeftHandFingers = "Left Hand Fingers";
+RightHandFingers = "Right Hand Fingers";
+IndexFinger = "Index";
+MiddleFinger = "Middle";
+RingFinger = "Ring";
+Pinkie = "Pinkie";
+Other = "Other";
+EnableAtLeastTwoFingers="Enable at least two fingers";
+Keyboard = "Keyboard";
+JIS = "JIS (Japanese)";
+US = "US (English)";
+NeedToShutdownToReflect = "To reflect this change, you will need to shutdown the application once.";
+ShutdownTheApplication = "Shutdown the application";

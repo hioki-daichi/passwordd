@@ -1,0 +1,27 @@
+/*
+  Localizable.strings
+  passwordd
+
+  Created by 日置大智 on 2015/04/30.
+  Copyright (c) 2015年 hiokidaichi. All rights reserved.
+*/
+Error="エラー";
+Later = "あとで";
+CharacterTypeExpansion = "文字種";
+IncludeNumber = "数字を含める";
+IncludeNumberDescription = "1234567890";
+IncludeLowerCaseSign = "記号を含める";
+IncludeLowerCaseSignDescription = "-^\\@[;:],./";
+LeftHandFingers = "左手の指";
+RightHandFingers = "右手の指";
+IndexFinger = "人差し指";
+MiddleFinger = "中指";
+RingFinger = "薬指";
+Pinkie = "小指";
+Other = "その他";
+EnableAtLeastTwoFingers="少なくとも2つの指を有効にしてください";
+Keyboard = "キーボード";
+JIS = "JIS (日本語版)";
+US = "US (英語版)";
+NeedToShutdownToReflect = "この変更を反映するには一度アプリを終了する必要があります。";
+ShutdownTheApplication = "アプリを終了する";
