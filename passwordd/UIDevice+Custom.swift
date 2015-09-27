@@ -16,11 +16,11 @@ public extension UIDevice {
     public var modelIdentifier: String {
         var systemInfo = utsname()
         uname(&systemInfo)
-        let mirror = reflect(systemInfo.machine)
+        let mirror = Mirror(reflecting: systemInfo.machine)
 
         var identifier = ""
-        for i in 0..<mirror.count {
-            if let value = mirror[i].1.value as? Int8 where value != 0 {
+        for child in mirror.children {
+            if let value = child.value as? Int8 where value != 0 {
                 identifier.append(UnicodeScalar(UInt8(value)))
             }
         }
@@ -31,7 +31,7 @@ public extension UIDevice {
     public static var deviceType: DeviceType = {
         let identifier = UIDevice.currentDevice().modelIdentifier
 
-        if contains(["x86_64", "i386"], identifier) { // Simulator の場合
+        if ["x86_64", "i386"].contains(identifier) { // Simulator の場合
             switch UIScreen.mainScreen().bounds.size {
             case CGSize(width: 414.0, height: 736.0):
                 return .iPhone6Plus
