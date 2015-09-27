@@ -90,7 +90,7 @@ public struct SoundManager {
 
     private static func setSoundID(keyCode: KeyCode, filename: String) {
         var soundID: SystemSoundID = 0
-        var soundURL: NSURL = NSBundle.mainBundle().URLForResource("Resource/" + filename, withExtension: "caf")!
+        let soundURL: NSURL = NSBundle.mainBundle().URLForResource("Resource/" + filename, withExtension: "caf")!
         AudioServicesCreateSystemSoundID(soundURL as CFURLRef, &soundID)
         soundIDOfKeyCodeDisplayString[keyCode.displayString()] = soundID
     }

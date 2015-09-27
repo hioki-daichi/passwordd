@@ -25,7 +25,7 @@ public class KeyboardUnitView: UIView {
     var label = UILabel(frame: CGRectZero)
     var keyCode: KeyCode?
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
         resetColor()
@@ -39,7 +39,7 @@ public class KeyboardUnitView: UIView {
         layer.cornerRadius = 2
     }
 
-    override public func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
 
         highlightColor()
@@ -84,7 +84,7 @@ public class KeyboardUnitView: UIView {
             }()
         label.font = UIFont(name: "DINAlternate-Bold", size: labelSize)
         addSubview(label)
-        label.setTranslatesAutoresizingMaskIntoConstraints(false)
+        label.translatesAutoresizingMaskIntoConstraints = false
         addConstraints(
             [
                 NSLayoutConstraint(item: self, attribute: .CenterX, relatedBy: .Equal, toItem: label, attribute: .CenterX, multiplier: 1, constant: 0),

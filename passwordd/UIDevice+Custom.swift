@@ -31,7 +31,7 @@ public extension UIDevice {
     public static var deviceType: DeviceType = {
         let identifier = UIDevice.currentDevice().modelIdentifier
 
-        if contains(["x86_64", "i386"], identifier) { // Simulator の場合
+        if ["x86_64", "i386"].contains(identifier) { // Simulator の場合
             switch UIScreen.mainScreen().bounds.size {
             case CGSize(width: 414.0, height: 736.0):
                 return .iPhone6Plus

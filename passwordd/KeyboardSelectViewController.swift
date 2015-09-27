@@ -44,8 +44,8 @@ class KeyboardSelectViewController: UITableViewController {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         if appDelegate.initialKeyboardType != newKeyboardType {
             let alertController = UIAlertController(title: nil, message: "NeedToShutdownToReflect".localize(), preferredStyle: .Alert)
-            alertController.addAction(UIAlertAction(title: "ShutdownTheApplication".localize(), style: .Default, handler: { (action: UIAlertAction!) in exit(0) }))
-            alertController.addAction(UIAlertAction(title: "Later".localize(), style: .Default, handler: { (action: UIAlertAction!) in }))
+            alertController.addAction(UIAlertAction(title: "ShutdownTheApplication".localize(), style: .Default, handler: { (action: UIAlertAction) in exit(0) }))
+            alertController.addAction(UIAlertAction(title: "Later".localize(), style: .Default, handler: { (action: UIAlertAction) in }))
             dispatch_async(dispatch_get_main_queue(), {
                 self.presentViewController(alertController, animated: true, completion: nil)
             })

@@ -257,6 +257,7 @@
 		3F71DC531AEB60D3002DFB9C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = hiokidaichi;
 				TargetAttributes = {

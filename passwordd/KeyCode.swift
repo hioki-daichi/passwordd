@@ -109,21 +109,21 @@ public enum KeyCode: String {
         }()
 
     public static func generateRandomKeycodes() -> [KeyCode] {
-        var filterL: KeyCode -> Bool = { contains(KeyCode.alphabetL, $0) },
-            filterR: KeyCode -> Bool = { contains(KeyCode.alphabetR, $0) }
+        var filterL: KeyCode -> Bool = { KeyCode.alphabetL.contains($0) },
+            filterR: KeyCode -> Bool = { KeyCode.alphabetR.contains($0) }
 
         if MyUserDefaults.sharedInstance.includeNumber {
             var _filterL = filterL,
                 _filterR = filterR
-            filterL = { _filterL($0) || contains(KeyCode.numberL, $0) }
-            filterR = { _filterR($0) || contains(KeyCode.numberR, $0) }
+            filterL = { _filterL($0) || KeyCode.numberL.contains($0) }
+            filterR = { _filterR($0) || KeyCode.numberR.contains($0) }
         }
 
         if MyUserDefaults.sharedInstance.includeLowerCaseSign {
             var _filterL = filterL,
                 _filterR = filterR
-            filterL = { _filterL($0) || contains(KeyCode.signL, $0) }
-            filterR = { _filterR($0) || contains(KeyCode.signR, $0) }
+            filterL = { _filterL($0) || KeyCode.signL.contains($0) }
+            filterR = { _filterR($0) || KeyCode.signR.contains($0) }
         }
 
         let array = KeyCode.allValues,
@@ -142,7 +142,7 @@ public enum KeyCode: String {
             // 左手
             var sampleL = getSampleL(arrayL)
             if n <= numberOfAvailableFingerL {
-                while contains(fingersL, sampleL.finger()) {
+                while fingersL.contains(sampleL.finger()) {
                     sampleL = getSampleL(arrayL)
                 }
             } else {
@@ -155,7 +155,7 @@ public enum KeyCode: String {
             // 右手
             var sampleR = getSampleR(arrayR)
             if n <= numberOfAvailableFingerR {
-                while contains(fingersR, sampleR.finger()) {
+                while fingersR.contains(sampleR.finger()) {
                     sampleR = getSampleR(arrayR)
                 }
             } else {
@@ -180,7 +180,7 @@ public enum KeyCode: String {
     public static func setReceivedKeyCodesFromString(q: String) {
         var keyCodes = [KeyCode]()
 
-        for c in q {
+        for c in q.characters {
             if let keyCode = KeyCode(rawValue: String(c)) {
                 keyCodes.append(keyCode)
             }
@@ -193,13 +193,13 @@ public enum KeyCode: String {
 
     private static func getSampleL(keyCodes: [KeyCode]) -> KeyCode {
         var ret = keyCodes.sample()
-        do { ret = keyCodes.sample() } while !ret.finger().isAllowedL()
+        repeat { ret = keyCodes.sample() } while !ret.finger().isAllowedL()
         return ret
     }
 
     private static func getSampleR(keyCodes: [KeyCode]) -> KeyCode {
         var ret = keyCodes.sample()
-        do { ret = keyCodes.sample() } while !ret.finger().isAllowedR()
+        repeat { ret = keyCodes.sample() } while !ret.finger().isAllowedR()
         return ret
     }
 

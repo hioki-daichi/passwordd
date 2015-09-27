@@ -56,7 +56,7 @@ class ViewController: UIViewController {
         refreshPassword()
     }
 
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
 
         if let touch = touches.first as? UITouch {
@@ -201,7 +201,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func shareButton(sender: AnyObject) {
-        let textToShare = join("", currentPassword.map { $0.rawValue })
+        let textToShare = currentPassword.map { $0.rawValue }.joinWithSeparator("")
 
         let activityViewController = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
 
