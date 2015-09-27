@@ -96,7 +96,6 @@ class ViewController: UIViewController {
 
     @IBAction private func refreshButton(sender: AnyObject) {
         refreshPassword()
-        SoundManager.vibrate()
     }
 
     @IBAction private func playButton(sender: AnyObject) {
