@@ -16,11 +16,11 @@ public extension UIDevice {
     public var modelIdentifier: String {
         var systemInfo = utsname()
         uname(&systemInfo)
-        let mirror = reflect(systemInfo.machine)
+        let mirror = Mirror(reflecting: systemInfo.machine)
 
         var identifier = ""
-        for i in 0..<mirror.count {
-            if let value = mirror[i].1.value as? Int8 where value != 0 {
+        for child in mirror.children {
+            if let value = child.value as? Int8 where value != 0 {
                 identifier.append(UnicodeScalar(UInt8(value)))
             }
         }

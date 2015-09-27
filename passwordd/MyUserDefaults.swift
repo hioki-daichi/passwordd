@@ -72,7 +72,7 @@ public class MyUserDefaults {
     }
 
     public func setDefaultValue() {
-        let lang = NSLocale.preferredLanguages().first as! String
+        let lang = NSLocale.preferredLanguages()[0]
         let keyboardType: KeyboardType = lang == "ja" ? .JIS : .US
 
         defaults.registerDefaults(

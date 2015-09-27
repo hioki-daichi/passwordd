@@ -59,15 +59,16 @@ class ViewController: UIViewController {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
 
-        if let touch = touches.first as? UITouch {
-            let v = touch.view
-            if v.tag == 1 {
-                let passwordPanelLabel = v as! PasswordPanelLabel
-                passwordPanelLabel.highlightColor()
+        for touch: UITouch in touches {
+            if let v = touch.view {
+                if v.tag == 1 {
+                    let passwordPanelLabel = v as! PasswordPanelLabel
+                    passwordPanelLabel.highlightColor()
 
-                if let keyCode = passwordPanelLabel.keyCode {
-                    getKeyboardUnitView(keyCode).highlightColor()
-                    SoundManager.play(keyCode)
+                    if let keyCode = passwordPanelLabel.keyCode {
+                        getKeyboardUnitView(keyCode).highlightColor()
+                        SoundManager.play(keyCode)
+                    }
                 }
             }
         }

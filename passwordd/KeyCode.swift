@@ -113,15 +113,15 @@ public enum KeyCode: String {
             filterR: KeyCode -> Bool = { KeyCode.alphabetR.contains($0) }
 
         if MyUserDefaults.sharedInstance.includeNumber {
-            var _filterL = filterL,
-                _filterR = filterR
+            let _filterL = filterL
+            let _filterR = filterR
             filterL = { _filterL($0) || KeyCode.numberL.contains($0) }
             filterR = { _filterR($0) || KeyCode.numberR.contains($0) }
         }
 
         if MyUserDefaults.sharedInstance.includeLowerCaseSign {
-            var _filterL = filterL,
-                _filterR = filterR
+            let _filterL = filterL
+            let _filterR = filterR
             filterL = { _filterL($0) || KeyCode.signL.contains($0) }
             filterR = { _filterR($0) || KeyCode.signR.contains($0) }
         }

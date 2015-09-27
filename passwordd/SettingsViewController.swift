@@ -262,7 +262,7 @@ class SettingsViewController: UITableViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension SettingsViewController: UITableViewDataSource {
+extension SettingsViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         return getTableViewCell(indexPath)
     }
@@ -281,7 +281,7 @@ extension SettingsViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
-extension SettingsViewController: UITableViewDelegate {
+extension SettingsViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let content = settingsSections[indexPath.section].contents[indexPath.row]
 
