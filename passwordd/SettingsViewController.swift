@@ -122,13 +122,13 @@ class SettingsViewController: UITableViewController {
                     (
                         title: "IncludeNumber".localize(),
                         detail: Optional("IncludeNumberDescription".localize()),
-                        sw: Optional(generateSwitchWithAction("includeNumberSwitched:", on: MyUserDefaults.sharedInstance.includeNumber)),
+                        sw: Optional(generateSwitchWithAction(#selector(SettingsViewController.includeNumberSwitched(_:)), on: MyUserDefaults.sharedInstance.includeNumber)),
                         funcOnDidSelect: nil
                     ),
                     (
                         title: "IncludeLowerCaseSign".localize(),
                         detail: Optional("IncludeLowerCaseSignDescription".localize()),
-                        sw: Optional(generateSwitchWithAction("includeLowerCaseSignSwitched:", on: MyUserDefaults.sharedInstance.includeLowerCaseSign)),
+                        sw: Optional(generateSwitchWithAction(#selector(SettingsViewController.includeLowerCaseSignSwitched(_:)), on: MyUserDefaults.sharedInstance.includeLowerCaseSign)),
                         funcOnDidSelect: nil
                     ),
                 ]
@@ -139,25 +139,25 @@ class SettingsViewController: UITableViewController {
                     (
                         title: "IndexFinger".localize(),
                         detail: nil,
-                        sw: Optional(generateSwitchWithAction("allowIndexFingerSwitchedL:", on: MyUserDefaults.sharedInstance.allowIndexFingerL)),
+                        sw: Optional(generateSwitchWithAction(#selector(SettingsViewController.allowIndexFingerSwitchedL(_:)), on: MyUserDefaults.sharedInstance.allowIndexFingerL)),
                         funcOnDidSelect: nil
                     ),
                     (
                         title: "MiddleFinger".localize(),
                         detail: nil,
-                        sw: Optional(generateSwitchWithAction("allowMiddleFingerSwitchedL:", on: MyUserDefaults.sharedInstance.allowMiddleFingerL)),
+                        sw: Optional(generateSwitchWithAction(#selector(SettingsViewController.allowMiddleFingerSwitchedL(_:)), on: MyUserDefaults.sharedInstance.allowMiddleFingerL)),
                         funcOnDidSelect: nil
                     ),
                     (
                         title: "RingFinger".localize(),
                         detail: nil,
-                        sw: Optional(generateSwitchWithAction("allowRingFingerSwitchedL:", on: MyUserDefaults.sharedInstance.allowRingFingerL)),
+                        sw: Optional(generateSwitchWithAction(#selector(SettingsViewController.allowRingFingerSwitchedL(_:)), on: MyUserDefaults.sharedInstance.allowRingFingerL)),
                         funcOnDidSelect: nil
                     ),
                     (
                         title: "Pinkie".localize(),
                         detail: nil,
-                        sw: Optional(generateSwitchWithAction("allowPinkieSwitchedL:", on: MyUserDefaults.sharedInstance.allowPinkieL)),
+                        sw: Optional(generateSwitchWithAction(#selector(SettingsViewController.allowPinkieSwitchedL(_:)), on: MyUserDefaults.sharedInstance.allowPinkieL)),
                         funcOnDidSelect: nil
                     ),
                 ]
@@ -168,25 +168,25 @@ class SettingsViewController: UITableViewController {
                     (
                         title: "IndexFinger".localize(),
                         detail: nil,
-                        sw: Optional(generateSwitchWithAction("allowIndexFingerSwitchedR:", on: MyUserDefaults.sharedInstance.allowIndexFingerR)),
+                        sw: Optional(generateSwitchWithAction(#selector(SettingsViewController.allowIndexFingerSwitchedR(_:)), on: MyUserDefaults.sharedInstance.allowIndexFingerR)),
                         funcOnDidSelect: nil
                     ),
                     (
                         title: "MiddleFinger".localize(),
                         detail: nil,
-                        sw: Optional(generateSwitchWithAction("allowMiddleFingerSwitchedR:", on: MyUserDefaults.sharedInstance.allowMiddleFingerR)),
+                        sw: Optional(generateSwitchWithAction(#selector(SettingsViewController.allowMiddleFingerSwitchedR(_:)), on: MyUserDefaults.sharedInstance.allowMiddleFingerR)),
                         funcOnDidSelect: nil
                     ),
                     (
                         title: "RingFinger".localize(),
                         detail: nil,
-                        sw: Optional(generateSwitchWithAction("allowRingFingerSwitchedR:", on: MyUserDefaults.sharedInstance.allowRingFingerR)),
+                        sw: Optional(generateSwitchWithAction(#selector(SettingsViewController.allowRingFingerSwitchedR(_:)), on: MyUserDefaults.sharedInstance.allowRingFingerR)),
                         funcOnDidSelect: nil
                     ),
                     (
                         title: "Pinkie".localize(),
                         detail: nil,
-                        sw: Optional(generateSwitchWithAction("allowPinkieSwitchedR:", on: MyUserDefaults.sharedInstance.allowPinkieR)),
+                        sw: Optional(generateSwitchWithAction(#selector(SettingsViewController.allowPinkieSwitchedR(_:)), on: MyUserDefaults.sharedInstance.allowPinkieR)),
                         funcOnDidSelect: nil
                     ),
                 ]

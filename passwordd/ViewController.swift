@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive:", name: "applicationDidBecomeActive", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.didBecomeActive(_:)), name: "applicationDidBecomeActive", object: nil)
 
         setKeyboardUnitViewLabel()
         SoundManager.setup()
@@ -197,7 +197,7 @@ class ViewController: UIViewController {
             block()
         }
 
-        playIndex++
+        playIndex += 1
     }
 
     @IBAction private func shareButton(sender: AnyObject) {
