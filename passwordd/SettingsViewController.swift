@@ -291,7 +291,7 @@ extension SettingsViewController {
 
         if let detail = content.detail {
             let cell = getTableViewCell(indexPath)
-            let attr = [NSFontAttributeName: cell.detailTextLabel!.font]
+            let attr: [String: Any] = [NSFontAttributeName: cell.detailTextLabel!.font]
             return cell.bounds.height + detail.size(attributes: attr).height - "a".size(attributes: attr).height + 20
         }
 
