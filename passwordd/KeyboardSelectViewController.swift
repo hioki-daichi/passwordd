@@ -9,49 +9,49 @@
 import UIKit
 
 class KeyboardSelectViewController: UITableViewController {
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: reuseIdentifier)
-        cell.selectionStyle = .None
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: reuseIdentifier)
+        cell.selectionStyle = .none
 
-        let keyboardType = contents[indexPath.row]
+        let keyboardType = contents[(indexPath as NSIndexPath).row]
 
         cell.textLabel?.text = keyboardType.displayString()
 
         if keyboardType == MyUserDefaults.sharedInstance.keyboardType {
-            cell.accessoryType = .Checkmark
+            cell.accessoryType = .checkmark
         }
 
         return cell
     }
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contents.count
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         for i in 0..<contents.count {
-            tableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: 0))?.accessoryType = .None
+            tableView.cellForRow(at: IndexPath(row: i, section: 0))?.accessoryType = .none
         }
 
-        tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
-        let newKeyboardType = contents[indexPath.row]
+        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        let newKeyboardType = contents[(indexPath as NSIndexPath).row]
         MyUserDefaults.sharedInstance.keyboardType = newKeyboardType
 
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if appDelegate.initialKeyboardType != newKeyboardType {
-            let alertController = UIAlertController(title: nil, message: "NeedToShutdownToReflect".localize(), preferredStyle: .Alert)
-            alertController.addAction(UIAlertAction(title: "ShutdownTheApplication".localize(), style: .Default, handler: { (action: UIAlertAction) in exit(0) }))
-            alertController.addAction(UIAlertAction(title: "Later".localize(), style: .Default, handler: { (action: UIAlertAction) in }))
-            dispatch_async(dispatch_get_main_queue(), {
-                self.presentViewController(alertController, animated: true, completion: nil)
+            let alertController = UIAlertController(title: nil, message: "NeedToShutdownToReflect".localize(), preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "ShutdownTheApplication".localize(), style: .default, handler: { (action: UIAlertAction) in exit(0) }))
+            alertController.addAction(UIAlertAction(title: "Later".localize(), style: .default, handler: { (action: UIAlertAction) in }))
+            DispatchQueue.main.async(execute: {
+                self.present(alertController, animated: true, completion: nil)
             })
         }
     }
 
-    private let contents = KeyboardType.allValues
-    private let reuseIdentifier = "Cell"
+    fileprivate let contents = KeyboardType.allValues
+    fileprivate let reuseIdentifier = "Cell"
 }

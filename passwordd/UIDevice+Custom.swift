@@ -10,7 +10,7 @@ import UIKit
 
 public extension UIDevice {
     public enum DeviceType {
-        case iPhone6, iPhone6Plus, iPad, Others
+        case iPhone6, iPhone6Plus, iPad, others
     }
 
     public var modelIdentifier: String {
@@ -20,8 +20,8 @@ public extension UIDevice {
 
         var identifier = ""
         for child in mirror.children {
-            if let value = child.value as? Int8 where value != 0 {
-                identifier.append(UnicodeScalar(UInt8(value)))
+            if let value = child.value as? Int8 , value != 0 {
+                identifier.append(String(UnicodeScalar(UInt8(value))))
             }
         }
 
@@ -29,10 +29,10 @@ public extension UIDevice {
     }
 
     public static var deviceType: DeviceType = {
-        let identifier = UIDevice.currentDevice().modelIdentifier
+        let identifier = UIDevice.current.modelIdentifier
 
         if ["x86_64", "i386"].contains(identifier) { // Simulator の場合
-            switch UIScreen.mainScreen().bounds.size {
+            switch UIScreen.main.bounds.size {
             case CGSize(width: 414.0, height: 736.0):
                 return .iPhone6Plus
             case CGSize(width: 375.0, height: 667.0):
@@ -40,7 +40,7 @@ public extension UIDevice {
             case CGSize(width: 768.0, height: 1024.0):
                 return .iPad
             default:
-                return .Others
+                return .others
             }
         }
 
@@ -52,7 +52,7 @@ public extension UIDevice {
         case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4", "iPad3,1", "iPad3,2", "iPad3,3", "iPad3,4", "iPad3,5", "iPad3,6", "iPad4,1", "iPad4,2", "iPad4,3", "iPad5,1", "iPad5,3", "iPad5,4", "iPad2,5", "iPad2,6", "iPad2,7", "iPad4,4", "iPad4,5", "iPad4,6", "iPad4,7", "iPad4,8", "iPad4,9":
             return .iPad
         default:
-            return .Others
+            return .others
         }
     }()
 }

@@ -9,17 +9,17 @@
 import Foundation
 
 public enum Speed: Int {
-    case Slowest, Slower, Normal, Faster, Fastest
+    case slowest, slower, normal, faster, fastest
 
     public func delay() -> Int64 {
         let x: Double
 
         switch self {
-        case .Slowest: x = 0.2
-        case .Slower:  x = 0.15
-        case .Normal:  x = 0.1
-        case .Faster:  x = 0.075
-        case .Fastest: x = 0.05
+        case .slowest: x = 0.2
+        case .slower:  x = 0.15
+        case .normal:  x = 0.1
+        case .faster:  x = 0.075
+        case .fastest: x = 0.05
         }
 
         return Int64(x * Double(NSEC_PER_SEC))
@@ -27,21 +27,21 @@ public enum Speed: Int {
 
     public func next() -> Speed {
         switch self {
-        case .Slowest: return .Slower
-        case .Slower:  return .Normal
-        case .Normal:  return .Faster
-        case .Faster:  return .Fastest
-        case .Fastest: return .Slowest
+        case .slowest: return .slower
+        case .slower:  return .normal
+        case .normal:  return .faster
+        case .faster:  return .fastest
+        case .fastest: return .slowest
         }
     }
 
     public func title() -> String {
         switch self {
-        case .Slowest: return "1x"
-        case .Slower:  return "2x"
-        case .Normal:  return "3x"
-        case .Faster:  return "4x"
-        case .Fastest: return "5x"
+        case .slowest: return "1x"
+        case .slower:  return "2x"
+        case .normal:  return "3x"
+        case .faster:  return "4x"
+        case .fastest: return "5x"
         }
     }
 }

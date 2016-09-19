@@ -15,8 +15,8 @@ extension String {
 
     func getDictionaryFromQuery() -> [String: String] {
         var queryParams = [String: String]()
-        for keyValue in self.componentsSeparatedByString("&") {
-            let pair = keyValue.componentsSeparatedByString("=")
+        for keyValue in self.components(separatedBy: "&") {
+            let pair = keyValue.components(separatedBy: "=")
             queryParams[pair[0]] = pair[1]
         }
 

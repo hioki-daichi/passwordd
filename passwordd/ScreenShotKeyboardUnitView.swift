@@ -17,43 +17,43 @@ class ScreenShotKeyboardUnitView: UIView {
 
         if tag == 1 {
             // Label
-            let label = UILabel(frame: CGRectZero)
+            let label = UILabel(frame: CGRect.zero)
             let n: CGFloat = 140 / 255.0
             label.textColor = UIColor(red: n, green: n, blue: n, alpha: 1)
             label.text = "d"
             label.font = UIFont(name: "DINAlternate-Bold", size: 400)
             label.translatesAutoresizingMaskIntoConstraints = false
             addSubview(label)
-            addConstraint(NSLayoutConstraint(item: label, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0))
-            addConstraint(NSLayoutConstraint(item: label, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0))
+            addConstraint(NSLayoutConstraint(item: label, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0))
+            addConstraint(NSLayoutConstraint(item: label, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0))
 
             // Border
-            layer.borderColor = UIColor(red: 222/255.5, green: 222/255.0, blue: 222/255.0, alpha: 1).CGColor
+            layer.borderColor = UIColor(red: 222/255.5, green: 222/255.0, blue: 222/255.0, alpha: 1).cgColor
             let borderWidth = CGFloat(2)
-            frame = CGRectInset(frame, -borderWidth, -borderWidth)
+            frame = frame.insetBy(dx: -borderWidth, dy: -borderWidth)
             layer.borderWidth = borderWidth
             layer.cornerRadius = 12
 
             // Drop Shadow
             let maskLayer = CAShapeLayer()
             let keyboardUnitViewWidth: CGFloat = 512
-            maskLayer.path = UIBezierPath(roundedRect: CGRectMake(0, 0, keyboardUnitViewWidth, keyboardUnitViewWidth + 10), cornerRadius: 12).CGPath
+            maskLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: keyboardUnitViewWidth, height: keyboardUnitViewWidth + 10), cornerRadius: 12).cgPath
             layer.mask = maskLayer
             layer.masksToBounds = false
-            layer.shadowColor = UIColor.blackColor().CGColor
+            layer.shadowColor = UIColor.black.cgColor
             layer.shadowOpacity = 0.17
             layer.shadowRadius = 10.0
-            layer.shadowOffset = CGSizeMake(0, 0)
+            layer.shadowOffset = CGSize(width: 0, height: 0)
         }
     }
 
-    class func setupScreenShotView(superView: UIView) {
-        superView.backgroundColor = UIColor.grayColor()
+    class func setupScreenShotView(_ superView: UIView) {
+        superView.backgroundColor = UIColor.gray
 
-        let v = UINib(nibName: "ScreenShotView", bundle: nil).instantiateWithOwner(self, options: nil)[0] as! UIView
+        let v = UINib(nibName: "ScreenShotView", bundle: nil).instantiate(withOwner: self, options: nil)[0] as! UIView
         superView.addSubview(v)
         v.translatesAutoresizingMaskIntoConstraints = false
-        superView.addConstraint(NSLayoutConstraint(item: v, attribute: .Top, relatedBy: .Equal, toItem: superView, attribute: .Top, multiplier: 1, constant: 0))
-        superView.addConstraint(NSLayoutConstraint(item: v, attribute: .Left, relatedBy: .Equal, toItem: superView, attribute: .Left, multiplier: 1, constant: 0))
+        superView.addConstraint(NSLayoutConstraint(item: v, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: 0))
+        superView.addConstraint(NSLayoutConstraint(item: v, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1, constant: 0))
     }
 }

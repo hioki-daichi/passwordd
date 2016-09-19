@@ -15,106 +15,106 @@ class SettingsViewController: UITableViewController {
         setTableViewContents()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setTableViewContents()
         tableView.reloadData()
     }
 
     func funcOnKeyboardDidSelected() {
-        performSegueWithIdentifier("fromSettingsToKeyboardSelect", sender: nil)
+        performSegue(withIdentifier: "fromSettingsToKeyboardSelect", sender: nil)
     }
 
-    func includeNumberSwitched(sender: UISwitch) {
-        MyUserDefaults.sharedInstance.includeNumber = sender.on
+    func includeNumberSwitched(_ sender: UISwitch) {
+        MyUserDefaults.sharedInstance.includeNumber = sender.isOn
     }
 
-    func includeLowerCaseSignSwitched(sender: UISwitch) {
-        MyUserDefaults.sharedInstance.includeLowerCaseSign = sender.on
+    func includeLowerCaseSignSwitched(_ sender: UISwitch) {
+        MyUserDefaults.sharedInstance.includeLowerCaseSign = sender.isOn
     }
 
-    func allowIndexFingerSwitchedL(sender: UISwitch) {
-        if !sender.on && !canSwitchLeft() {
-            sender.on = true
+    func allowIndexFingerSwitchedL(_ sender: UISwitch) {
+        if !sender.isOn && !canSwitchLeft() {
+            sender.isOn = true
             alertToEnableAtLeastTwoFingers()
             return
         }
 
-        MyUserDefaults.sharedInstance.allowIndexFingerL = sender.on
+        MyUserDefaults.sharedInstance.allowIndexFingerL = sender.isOn
     }
-    func allowIndexFingerSwitchedR(sender: UISwitch) {
-        if !sender.on && !canSwitchRight() {
-            sender.on = true
+    func allowIndexFingerSwitchedR(_ sender: UISwitch) {
+        if !sender.isOn && !canSwitchRight() {
+            sender.isOn = true
             alertToEnableAtLeastTwoFingers()
             return
         }
 
-        MyUserDefaults.sharedInstance.allowIndexFingerR = sender.on
+        MyUserDefaults.sharedInstance.allowIndexFingerR = sender.isOn
     }
 
-    func allowMiddleFingerSwitchedL(sender: UISwitch) {
-        if !sender.on && !canSwitchLeft() {
-            sender.on = true
+    func allowMiddleFingerSwitchedL(_ sender: UISwitch) {
+        if !sender.isOn && !canSwitchLeft() {
+            sender.isOn = true
             alertToEnableAtLeastTwoFingers()
             return
         }
 
-        MyUserDefaults.sharedInstance.allowMiddleFingerL = sender.on
+        MyUserDefaults.sharedInstance.allowMiddleFingerL = sender.isOn
     }
-    func allowMiddleFingerSwitchedR(sender: UISwitch) {
-        if !sender.on && !canSwitchRight() {
-            sender.on = true
+    func allowMiddleFingerSwitchedR(_ sender: UISwitch) {
+        if !sender.isOn && !canSwitchRight() {
+            sender.isOn = true
             alertToEnableAtLeastTwoFingers()
             return
         }
 
-        MyUserDefaults.sharedInstance.allowMiddleFingerR = sender.on
+        MyUserDefaults.sharedInstance.allowMiddleFingerR = sender.isOn
     }
 
-    func allowRingFingerSwitchedL(sender: UISwitch) {
-        if !sender.on && !canSwitchLeft() {
-            sender.on = true
+    func allowRingFingerSwitchedL(_ sender: UISwitch) {
+        if !sender.isOn && !canSwitchLeft() {
+            sender.isOn = true
             alertToEnableAtLeastTwoFingers()
             return
         }
 
-        MyUserDefaults.sharedInstance.allowRingFingerL = sender.on
+        MyUserDefaults.sharedInstance.allowRingFingerL = sender.isOn
     }
 
-    func allowRingFingerSwitchedR(sender: UISwitch) {
-        if !sender.on && !canSwitchRight() {
-            sender.on = true
+    func allowRingFingerSwitchedR(_ sender: UISwitch) {
+        if !sender.isOn && !canSwitchRight() {
+            sender.isOn = true
             alertToEnableAtLeastTwoFingers()
             return
         }
 
-        MyUserDefaults.sharedInstance.allowRingFingerR = sender.on
+        MyUserDefaults.sharedInstance.allowRingFingerR = sender.isOn
     }
 
-    func allowPinkieSwitchedL(sender: UISwitch) {
-        if !sender.on && !canSwitchLeft() {
-            sender.on = true
+    func allowPinkieSwitchedL(_ sender: UISwitch) {
+        if !sender.isOn && !canSwitchLeft() {
+            sender.isOn = true
             alertToEnableAtLeastTwoFingers()
             return
         }
 
-        MyUserDefaults.sharedInstance.allowPinkieL = sender.on
+        MyUserDefaults.sharedInstance.allowPinkieL = sender.isOn
     }
-    func allowPinkieSwitchedR(sender: UISwitch) {
-        if !sender.on && !canSwitchRight() {
-            sender.on = true
+    func allowPinkieSwitchedR(_ sender: UISwitch) {
+        if !sender.isOn && !canSwitchRight() {
+            sender.isOn = true
             alertToEnableAtLeastTwoFingers()
             return
         }
 
-        MyUserDefaults.sharedInstance.allowPinkieR = sender.on
+        MyUserDefaults.sharedInstance.allowPinkieR = sender.isOn
     }
 
-    private let reuseIdentifier = "Cell"
+    fileprivate let reuseIdentifier = "Cell"
 
-    private var settingsSections: [(sectionTitle: String, contents: [Content])]!
+    fileprivate var settingsSections: [(sectionTitle: String, contents: [Content])]!
 
-    private func setTableViewContents() {
+    fileprivate func setTableViewContents() {
         settingsSections = [
             (
                 sectionTitle: "CharacterTypeExpansion".localize(),
@@ -205,19 +205,19 @@ class SettingsViewController: UITableViewController {
         ]
     }
 
-    private func getTableViewCell(indexPath: NSIndexPath) -> UITableViewCell {
-        let content = settingsSections[indexPath.section].contents[indexPath.row]
+    fileprivate func getTableViewCell(_ indexPath: IndexPath) -> UITableViewCell {
+        let content = settingsSections[(indexPath as NSIndexPath).section].contents[(indexPath as NSIndexPath).row]
 
         let cell: UITableViewCell
         if content.funcOnDidSelect != nil {
-            cell = UITableViewCell(style: .Value1, reuseIdentifier: reuseIdentifier)
-            cell.accessoryType = .DisclosureIndicator
+            cell = UITableViewCell(style: .value1, reuseIdentifier: reuseIdentifier)
+            cell.accessoryType = .disclosureIndicator
         } else {
-            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: reuseIdentifier)
-            cell.selectionStyle = .None
+            cell = UITableViewCell(style: .subtitle, reuseIdentifier: reuseIdentifier)
+            cell.selectionStyle = .none
         }
 
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
 
         if let textLabel = cell.textLabel {
             textLabel.text = content.title
@@ -237,25 +237,25 @@ class SettingsViewController: UITableViewController {
         return cell
     }
 
-    private func generateSwitchWithAction(action: Selector, on: Bool) -> UISwitch {
+    fileprivate func generateSwitchWithAction(_ action: Selector, on: Bool) -> UISwitch {
         let sw = UISwitch()
-        sw.on = on
-        sw.addTarget(self, action: action, forControlEvents: UIControlEvents.ValueChanged)
+        sw.isOn = on
+        sw.addTarget(self, action: action, for: UIControlEvents.valueChanged)
         return sw
     }
 
-    private func alertToEnableAtLeastTwoFingers() {
-        let alertController = UIAlertController(title: "Error".localize(), message: "EnableAtLeastTwoFingers".localize(), preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .Default) { action in })
-        presentViewController(alertController, animated: true, completion: nil)
+    fileprivate func alertToEnableAtLeastTwoFingers() {
+        let alertController = UIAlertController(title: "Error".localize(), message: "EnableAtLeastTwoFingers".localize(), preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default) { action in })
+        present(alertController, animated: true, completion: nil)
     }
 
-    private func canSwitchLeft() -> Bool {
+    fileprivate func canSwitchLeft() -> Bool {
         // 少なくとも 2 つの指が有効になっていないと指が分散できなくなるためチェックをしている
         return Finger.allValues.map { $0.isAllowedL() }.filter { $0 == true }.count > 2
     }
 
-    private func canSwitchRight() -> Bool {
+    fileprivate func canSwitchRight() -> Bool {
         // 少なくとも 2 つの指が有効になっていないと指が分散できなくなるためチェックをしている
         return Finger.allValues.map { $0.isAllowedR() }.filter { $0 == true }.count > 2
     }
@@ -263,27 +263,27 @@ class SettingsViewController: UITableViewController {
 
 // MARK: - UITableViewDataSource
 extension SettingsViewController {
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return getTableViewCell(indexPath)
     }
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return settingsSections.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settingsSections[section].contents.count
     }
 
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return settingsSections[section].sectionTitle
     }
 }
 
 // MARK: - UITableViewDelegate
 extension SettingsViewController {
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let content = settingsSections[indexPath.section].contents[indexPath.row]
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let content = settingsSections[(indexPath as NSIndexPath).section].contents[(indexPath as NSIndexPath).row]
 
         if content.funcOnDidSelect != nil {
             return tableView.rowHeight
@@ -292,18 +292,18 @@ extension SettingsViewController {
         if let detail = content.detail {
             let cell = getTableViewCell(indexPath)
             let attr = [NSFontAttributeName: cell.detailTextLabel!.font]
-            return cell.bounds.height + detail.sizeWithAttributes(attr).height - "a".sizeWithAttributes(attr).height + 20
+            return cell.bounds.height + detail.size(attributes: attr).height - "a".size(attributes: attr).height + 20
         }
 
         return tableView.rowHeight
     }
 
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 44
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let f = settingsSections[indexPath.section].contents[indexPath.row].funcOnDidSelect {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let f = settingsSections[(indexPath as NSIndexPath).section].contents[(indexPath as NSIndexPath).row].funcOnDidSelect {
             f()
         }
     }
