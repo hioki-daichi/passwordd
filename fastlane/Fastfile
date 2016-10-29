@@ -1,73 +1,53 @@
 # Customise this file, documentation can be found here:
-# https://github.com/fastlane/fastlane/tree/master/fastlane/docs
-# All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
-# can also be listed using the `fastlane actions` command
-
-# Change the syntax highlighting to Ruby
-# All lines starting with a # are ignored when running `fastlane`
-
-# If you want to automatically update fastlane if a new version is available:
-# update_fastlane
-
-# This is the minimum version number required.
-# Update this, if you use features of a newer version
 fastlane_version "1.106.2"
 
 default_platform :ios
 
+WORKSPACE                = "passwordd.xcworkspace"
+SCHEME                   = "passwordd"
+
 platform :ios do
-  before_all do
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-    
-    
+  desc "Deliver debug app to emails: or groups:"
+  lane :deliver_debug do |options|
+    setup
+    build(configuration: "Debug")
+    deliver_by_crashlytics(emails: options[:emails], groups: options[:groups])
   end
 
-  desc "Runs all the tests"
-  lane :test do
-    scan
+  private_lane :setup do
+    cocoapods
   end
 
-  desc "Submit a new Beta Build to Apple TestFlight"
-  desc "This will also make sure the profile is up to date"
-  lane :beta do
-    # match(type: "appstore") # more information: https://codesigning.guide
-    gym(scheme: "passwordd") # Build your app - more options available
-    pilot
+  private_lane :build do |options|
+    configuration = options[:configuration] || abort("configuration: option is required.")
 
-    # sh "your_script.sh"
-    # You can also use other beta testing services here (run `fastlane actions`)
+    gym(
+      workspace:            WORKSPACE,
+      scheme:               SCHEME,
+      clean:                true,
+      use_legacy_build_api: true,
+      configuration:        configuration
+    )
   end
 
-  desc "Deploy a new version to the App Store"
-  lane :release do
-    # match(type: "appstore")
-    # snapshot
-    gym(scheme: "passwordd") # Build your app - more options available
-    deliver(force: true)
-    # frameit
-  end
+  private_lane :deliver_by_crashlytics do |options|
+    emails = options[:emails]
+    groups = options[:groups]
 
-  # You can define as many lanes as you want
+    targets = if emails
+      { emails: emails }
+    elsif groups
+      { groups: groups }
+    else
+      abort("emails: or groups: option is required")
+    end
 
-  after_all do |lane|
-    # This block is called, only if the executed lane was successful
-
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
-  end
-
-  error do |lane, exception|
-    # slack(
-    #   message: exception.message,
-    #   success: false
-    # )
+    crashlytics(
+      {
+        api_token:     ENV["CRASHLYTICS_API_KEY"],
+        build_secret:  ENV["CRASHLYTICS_BUILD_SECRET"],
+        notifications: true
+      }.merge(targets)
+    )
   end
 end
-
-
-# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
-# All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
-
-# fastlane reports which actions are used
-# No personal data is recorded. Learn more at https://github.com/fastlane/enhancer
