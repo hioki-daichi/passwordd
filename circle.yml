@@ -1,0 +1,13 @@
+machine:
+  xcode:
+    version: 7.3.1
+  environment:
+    XCODE_SCHEME: passwordd
+    XCODE_WORKSPACE: passwordd.xcworkspace
+    GYM_CODE_SIGNING_IDENTITY: iPhone Developer
+deployment:
+  release:
+    branch: release
+    commands:
+      - gem install bundler
+      - bundle exec fastlane deliver_debug groups:developer
