@@ -8,8 +8,8 @@
 
 import UIKit
 
-public class PasswordPanelLabel: UILabel {
-    public static var width: CGFloat = {
+open class PasswordPanelLabel: UILabel {
+    open static var width: CGFloat = {
         switch UIDevice.deviceType {
         case .iPhone6:
             return 21
@@ -24,24 +24,24 @@ public class PasswordPanelLabel: UILabel {
 
     var keyCode: KeyCode?
 
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
 
         resetColor()
     }
 
-    func setup(keyCode: KeyCode) {
+    func setup(_ keyCode: KeyCode) {
         self.keyCode = keyCode
         text = keyCode.displayString()
 
         if UIDevice.deviceType == .iPad {
-            font = UIFont.boldSystemFontOfSize(26)
+            font = UIFont.boldSystemFont(ofSize: 26)
         }
     }
 
     func highlightColor() {
         textColor = Color.highlight
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, MyUserDefaults.sharedInstance.speed.delay()), dispatch_get_main_queue()) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(MyUserDefaults.sharedInstance.speed.delay()) / Double(NSEC_PER_SEC)) {
             self.resetColor()
         }
     }
@@ -50,7 +50,7 @@ public class PasswordPanelLabel: UILabel {
         textColor = Color.normal
     }
 
-    private struct Color {
+    fileprivate struct Color {
         static let normal    = UIColor(red: 222/255.0, green: 222/255.0, blue: 222/255.0, alpha: 1)
         static let highlight = UIColor(red: 80/255.0, green: 80/255.0, blue: 80/255.0, alpha: 1)
     }

@@ -54,7 +54,7 @@ public struct SoundManager {
         setSoundID(KeyCode.Slash, filename: "Slash")
 
         switch MyUserDefaults.sharedInstance.keyboardType {
-        case .JIS:
+        case .jis:
             // only JIS
             setSoundID(KeyCode.Backslash, filename: "Backslash")
             setSoundID(KeyCode.BracketRight, filename: "BracketRight")
@@ -64,7 +64,7 @@ public struct SoundManager {
             setSoundID(KeyCode.Atmark, filename: "Atmark") // @ or [
             setSoundID(KeyCode.BracketLeft, filename: "BracketLeft") // [ or ]
             setSoundID(KeyCode.Colon, filename: "Colon") // : or '
-        case .US:
+        case .us:
             // only US
             setSoundID(KeyCode.USBackquote, filename: "Num1") // 音声データがないため隣のキーの 1 で代用する
             setSoundID(KeyCode.Backslash, filename: "BracketLeft") // 音声データがないため隣の ] の音に当たる JIS でいう [ で代用する
@@ -76,7 +76,7 @@ public struct SoundManager {
         }
     }
 
-    public static func play(keyCode: KeyCode) {
+    public static func play(_ keyCode: KeyCode) {
         if let soundID = soundIDOfKeyCodeDisplayString[keyCode.displayString()] {
             AudioServicesPlaySystemSound(soundID)
         }
@@ -86,12 +86,12 @@ public struct SoundManager {
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
 
-    private static var soundIDOfKeyCodeDisplayString = [String: SystemSoundID]()
+    fileprivate static var soundIDOfKeyCodeDisplayString = [String: SystemSoundID]()
 
-    private static func setSoundID(keyCode: KeyCode, filename: String) {
+    fileprivate static func setSoundID(_ keyCode: KeyCode, filename: String) {
         var soundID: SystemSoundID = 0
-        let soundURL: NSURL = NSBundle.mainBundle().URLForResource("Resource/" + filename, withExtension: "caf")!
-        AudioServicesCreateSystemSoundID(soundURL as CFURLRef, &soundID)
+        let soundURL: URL = Bundle.main.url(forResource: "Resource/" + filename, withExtension: "caf")!
+        AudioServicesCreateSystemSoundID(soundURL as CFURL, &soundID)
         soundIDOfKeyCodeDisplayString[keyCode.displayString()] = soundID
     }
 }

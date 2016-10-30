@@ -8,75 +8,75 @@
 
 import Foundation
 
-public class MyUserDefaults {
-    public static let sharedInstance = MyUserDefaults()
+open class MyUserDefaults {
+    open static let sharedInstance = MyUserDefaults()
 
-    public var includeNumber: Bool {
-        get { return defaults.boolForKey("IncludeNumber") }
-        set { defaults.setBool(newValue, forKey: "IncludeNumber") }
+    open var includeNumber: Bool {
+        get { return defaults.bool(forKey: "IncludeNumber") }
+        set { defaults.set(newValue, forKey: "IncludeNumber") }
     }
 
-    public var includeLowerCaseSign: Bool {
-        get { return defaults.boolForKey("IncludeLowerCaseSign") }
-        set { defaults.setBool(newValue, forKey: "IncludeLowerCaseSign") }
+    open var includeLowerCaseSign: Bool {
+        get { return defaults.bool(forKey: "IncludeLowerCaseSign") }
+        set { defaults.set(newValue, forKey: "IncludeLowerCaseSign") }
     }
 
-    public var allowIndexFingerL: Bool {
-        get { return defaults.boolForKey("AllowIndexFingerL") }
-        set { defaults.setBool(newValue, forKey: "AllowIndexFingerL") }
+    open var allowIndexFingerL: Bool {
+        get { return defaults.bool(forKey: "AllowIndexFingerL") }
+        set { defaults.set(newValue, forKey: "AllowIndexFingerL") }
     }
 
-    public var allowIndexFingerR: Bool {
-        get { return defaults.boolForKey("AllowIndexFingerR") }
-        set { defaults.setBool(newValue, forKey: "AllowIndexFingerR") }
+    open var allowIndexFingerR: Bool {
+        get { return defaults.bool(forKey: "AllowIndexFingerR") }
+        set { defaults.set(newValue, forKey: "AllowIndexFingerR") }
     }
 
-    public var allowMiddleFingerL: Bool {
-        get { return defaults.boolForKey("AllowMiddleFingerL") }
-        set { defaults.setBool(newValue, forKey: "AllowMiddleFingerL") }
+    open var allowMiddleFingerL: Bool {
+        get { return defaults.bool(forKey: "AllowMiddleFingerL") }
+        set { defaults.set(newValue, forKey: "AllowMiddleFingerL") }
     }
 
-    public var allowMiddleFingerR: Bool {
-        get { return defaults.boolForKey("AllowMiddleFingerR") }
-        set { defaults.setBool(newValue, forKey: "AllowMiddleFingerR") }
+    open var allowMiddleFingerR: Bool {
+        get { return defaults.bool(forKey: "AllowMiddleFingerR") }
+        set { defaults.set(newValue, forKey: "AllowMiddleFingerR") }
     }
 
-    public var allowRingFingerL: Bool {
-        get { return defaults.boolForKey("AllowRingFingerL") }
-        set { defaults.setBool(newValue, forKey: "AllowRingFingerL") }
+    open var allowRingFingerL: Bool {
+        get { return defaults.bool(forKey: "AllowRingFingerL") }
+        set { defaults.set(newValue, forKey: "AllowRingFingerL") }
     }
 
-    public var allowRingFingerR: Bool {
-        get { return defaults.boolForKey("AllowRingFingerR") }
-        set { defaults.setBool(newValue, forKey: "AllowRingFingerR") }
+    open var allowRingFingerR: Bool {
+        get { return defaults.bool(forKey: "AllowRingFingerR") }
+        set { defaults.set(newValue, forKey: "AllowRingFingerR") }
     }
 
-    public var allowPinkieL: Bool {
-        get { return defaults.boolForKey("AllowPinkieL") }
-        set { defaults.setBool(newValue, forKey: "AllowPinkieL") }
+    open var allowPinkieL: Bool {
+        get { return defaults.bool(forKey: "AllowPinkieL") }
+        set { defaults.set(newValue, forKey: "AllowPinkieL") }
     }
 
-    public var allowPinkieR: Bool {
-        get { return defaults.boolForKey("AllowPinkieR") }
-        set { defaults.setBool(newValue, forKey: "AllowPinkieR") }
+    open var allowPinkieR: Bool {
+        get { return defaults.bool(forKey: "AllowPinkieR") }
+        set { defaults.set(newValue, forKey: "AllowPinkieR") }
     }
 
-    public var keyboardType: KeyboardType {
-        get { return KeyboardType(rawValue: defaults.integerForKey("KeyboardType"))! }
-        set(newValue) { defaults.setInteger(newValue.rawValue, forKey: "KeyboardType") }
+    open var keyboardType: KeyboardType {
+        get { return KeyboardType(rawValue: defaults.integer(forKey: "KeyboardType"))! }
+        set(newValue) { defaults.set(newValue.rawValue, forKey: "KeyboardType") }
     }
 
-    public var speed: Speed {
-        get { return Speed(rawValue: defaults.integerForKey("Speed"))! }
-        set(newValue) { defaults.setInteger(newValue.rawValue, forKey: "Speed") }
+    open var speed: Speed {
+        get { return Speed(rawValue: defaults.integer(forKey: "Speed"))! }
+        set(newValue) { defaults.set(newValue.rawValue, forKey: "Speed") }
     }
 
-    public func setDefaultValue() {
-        let lang = NSLocale.preferredLanguages()[0]
-        let keyboardType: KeyboardType = lang == "ja" ? .JIS : .US
+    open func setDefaultValue() {
+        let lang = Locale.preferredLanguages[0]
+        let keyboardType: KeyboardType = lang == "ja" ? .jis : .us
 
-        defaults.registerDefaults(
-            [
+        defaults.register(
+            defaults: [
                 "IncludeNumber":        false,
                 "IncludeLowerCaseSign": false,
                 "AllowIndexFingerL":    true,
@@ -88,10 +88,10 @@ public class MyUserDefaults {
                 "AllowPinkieL":         true,
                 "AllowPinkieR":         true,
                 "KeyboardType":         keyboardType.rawValue,
-                "Speed":                Speed.Slowest.rawValue,
+                "Speed":                Speed.slowest.rawValue,
             ]
         )
     }
 
-    private let defaults = NSUserDefaults.standardUserDefaults()
+    fileprivate let defaults = UserDefaults.standard
 }

@@ -9,17 +9,17 @@
 import Foundation
 
 public enum KeyboardType: Int {
-    case JIS, US
+    case jis, us
 
-    public static let allValues = [JIS, US]
+    public static let allValues = [jis, us]
 
-    public static var currentKeyboardType = JIS
+    public static var currentKeyboardType = jis
 
     public func displayString() -> String {
         switch self {
-        case .JIS:
+        case .jis:
             return "JIS".localize()
-        case .US:
+        case .us:
             return "US".localize()
         }
     }

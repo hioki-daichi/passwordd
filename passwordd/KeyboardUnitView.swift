@@ -8,8 +8,8 @@
 
 import UIKit
 
-public class KeyboardUnitView: UIView {
-    public static var width: CGFloat = {
+open class KeyboardUnitView: UIView {
+    open static var width: CGFloat = {
         switch UIDevice.deviceType {
         case .iPhone6:
             return 22
@@ -22,7 +22,7 @@ public class KeyboardUnitView: UIView {
         }
         }()
 
-    var label = UILabel(frame: CGRectZero)
+    var label = UILabel(frame: CGRect.zero)
     var keyCode: KeyCode?
 
     required public init?(coder aDecoder: NSCoder) {
@@ -32,15 +32,15 @@ public class KeyboardUnitView: UIView {
         setLabel()
 
         // Border
-        layer.borderColor = Color.border.CGColor
+        layer.borderColor = Color.border.cgColor
         let borderWidth = CGFloat(0.5)
-        frame = CGRectInset(frame, -borderWidth, -borderWidth)
+        frame = frame.insetBy(dx: -borderWidth, dy: -borderWidth)
         layer.borderWidth = borderWidth
         layer.cornerRadius = 2
     }
 
-    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches, withEvent: event)
+    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
 
         highlightColor()
 
@@ -49,14 +49,14 @@ public class KeyboardUnitView: UIView {
         }
     }
 
-    func setup(keyCode: KeyCode) {
+    func setup(_ keyCode: KeyCode) {
         self.keyCode = keyCode
         label.text = keyCode.displayString()
     }
 
     func highlightColor() {
         backgroundColor = Color.highlight
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, MyUserDefaults.sharedInstance.speed.delay()), dispatch_get_main_queue()) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(MyUserDefaults.sharedInstance.speed.delay()) / Double(NSEC_PER_SEC)) {
             self.resetColor()
         }
     }
@@ -65,14 +65,14 @@ public class KeyboardUnitView: UIView {
         backgroundColor = Color.normal
     }
 
-    private struct Color {
+    fileprivate struct Color {
         static let title     = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1)
         static let highlight = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
         static let normal    = UIColor(red: 247/255.5, green: 247/255.0, blue: 247/255.0, alpha: 1)
         static let border    = UIColor(red: 222/255.5, green: 222/255.0, blue: 222/255.0, alpha: 1)
     }
 
-    private func setLabel() {
+    fileprivate func setLabel() {
         label.textColor = Color.title
         let labelSize: CGFloat = {
             switch UIDevice.deviceType {
@@ -87,8 +87,8 @@ public class KeyboardUnitView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         addConstraints(
             [
-                NSLayoutConstraint(item: self, attribute: .CenterX, relatedBy: .Equal, toItem: label, attribute: .CenterX, multiplier: 1, constant: 0),
-                NSLayoutConstraint(item: self, attribute: .CenterY, relatedBy: .Equal, toItem: label, attribute: .CenterY, multiplier: 1, constant: 0),
+                NSLayoutConstraint(item: self, attribute: .centerX, relatedBy: .equal, toItem: label, attribute: .centerX, multiplier: 1, constant: 0),
+                NSLayoutConstraint(item: self, attribute: .centerY, relatedBy: .equal, toItem: label, attribute: .centerY, multiplier: 1, constant: 0),
             ]
         )
     }

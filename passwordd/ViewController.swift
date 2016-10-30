@@ -12,22 +12,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didBecomeActive:", name: "applicationDidBecomeActive", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.didBecomeActive(_:)), name: NSNotification.Name(rawValue: "applicationDidBecomeActive"), object: nil)
 
         setKeyboardUnitViewLabel()
         SoundManager.setup()
 
-        speedButton.setTitle(MyUserDefaults.sharedInstance.speed.title(), forState: .Normal)
-        speedButton.setTitleColor(UIColor(red: 210/255.0, green: 210/255.0, blue: 210/255.0, alpha: 1), forState: .Disabled)
+        speedButton.setTitle(MyUserDefaults.sharedInstance.speed.title(), for: UIControlState())
+        speedButton.setTitleColor(UIColor(red: 210/255.0, green: 210/255.0, blue: 210/255.0, alpha: 1), for: .disabled)
 
         keyboardUnitWidthConstraint.constant = KeyboardUnitView.width
         passwordPanelLabelWidthConstraint.constant = PasswordPanelLabel.width
 
         switch MyUserDefaults.sharedInstance.keyboardType {
-        case .JIS:
+        case .jis:
             usBackquoteViewWidthConstraint.constant = 0
-            usBackquoteView.hidden = true
-            usBackslashView.hidden = true
+            usBackquoteView.isHidden = true
+            usBackslashView.isHidden = true
             backslashViewWidthConstraint.constant = keyboardUnitWidthConstraint.constant
 
             if UIDevice.deviceType == .iPad {
@@ -37,12 +37,12 @@ class ViewController: UIViewController {
                 row0Margin.constant = 10
                 row1Margin.constant = 10
             }
-        case .US:
+        case .us:
             usBackquoteViewWidthConstraint.constant = keyboardUnitWidthConstraint.constant
             backslashViewWidthConstraint.constant = 0
-            backslashView.hidden = true
-            bracketRightView.hidden = true
-            underscoreView.hidden = true
+            backslashView.isHidden = true
+            bracketRightView.isHidden = true
+            underscoreView.isHidden = true
 
             if UIDevice.deviceType == .iPad {
                 row0Margin.constant = 70
@@ -56,8 +56,8 @@ class ViewController: UIViewController {
         refreshPassword()
     }
 
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches, withEvent: event)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
 
         for touch: UITouch in touches {
             if let v = touch.view {
@@ -74,7 +74,7 @@ class ViewController: UIViewController {
         }
     }
 
-    func didBecomeActive(notification: NSNotification) {
+    func didBecomeActive(_ notification: Notification) {
         if let receivedPassword = KeyCode.receivedKeyCodes {
             currentPassword = receivedPassword
             setPasswordPanelLabel(currentPassword)
@@ -87,23 +87,23 @@ class ViewController: UIViewController {
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var refreshButton: UIButton!
-    @IBOutlet private weak var playButton: UIButton!
-    @IBOutlet private weak var speedButton: UIButton!
-    @IBOutlet private weak var row0Margin: NSLayoutConstraint!
-    @IBOutlet private weak var row1Margin: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var playButton: UIButton!
+    @IBOutlet fileprivate weak var speedButton: UIButton!
+    @IBOutlet fileprivate weak var row0Margin: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var row1Margin: NSLayoutConstraint!
 
-    private var currentPassword: [KeyCode]!
+    fileprivate var currentPassword: [KeyCode]!
 
-    @IBAction private func refreshButton(sender: AnyObject) {
+    @IBAction fileprivate func refreshButton(_ sender: AnyObject) {
         refreshPassword()
     }
 
-    @IBAction private func playButton(sender: AnyObject) {
-        playButton.enabled = false
-        refreshButton.enabled = false
-        shareButton.enabled = false
-        settingsButton.enabled = false
-        speedButton.enabled = false
+    @IBAction fileprivate func playButton(_ sender: AnyObject) {
+        playButton.isEnabled = false
+        refreshButton.isEnabled = false
+        shareButton.isEnabled = false
+        settingsButton.isEnabled = false
+        speedButton.isEnabled = false
         playIndex = 0
         play(currentPassword[0]) {
             self.play(self.currentPassword[1]) {
@@ -121,11 +121,11 @@ class ViewController: UIViewController {
                                                             self.play(self.currentPassword[13]) {
                                                                 self.play(self.currentPassword[14]) {
                                                                     self.play(self.currentPassword[15]) {
-                                                                        self.playButton.enabled = true
-                                                                        self.refreshButton.enabled = true
-                                                                        self.shareButton.enabled = true
-                                                                        self.settingsButton.enabled = true
-                                                                        self.speedButton.enabled = true
+                                                                        self.playButton.isEnabled = true
+                                                                        self.refreshButton.isEnabled = true
+                                                                        self.shareButton.isEnabled = true
+                                                                        self.settingsButton.isEnabled = true
+                                                                        self.speedButton.isEnabled = true
                                                                     }
                                                                 }
                                                             }
@@ -144,12 +144,12 @@ class ViewController: UIViewController {
         }
     }
 
-    private func refreshPassword() {
+    fileprivate func refreshPassword() {
         currentPassword = KeyCode.generateRandomKeycodes()
         setPasswordPanelLabel(currentPassword)
     }
 
-    private func play(keyCode: KeyCode, block: () -> ()) {
+    fileprivate func play(_ keyCode: KeyCode, block: @escaping () -> ()) {
         switch playIndex {
         case 0:
             passwordPanelLabel0.highlightColor()
@@ -192,16 +192,16 @@ class ViewController: UIViewController {
 
         SoundManager.play(keyCode)
 
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, MyUserDefaults.sharedInstance.speed.delay()), dispatch_get_main_queue()) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(MyUserDefaults.sharedInstance.speed.delay()) / Double(NSEC_PER_SEC)) {
             keyboardUnitView.resetColor()
             block()
         }
 
-        playIndex++
+        playIndex += 1
     }
 
-    @IBAction private func shareButton(sender: AnyObject) {
-        let textToShare = currentPassword.map { $0.rawValue }.joinWithSeparator("")
+    @IBAction fileprivate func shareButton(_ sender: AnyObject) {
+        let textToShare = currentPassword.map { $0.rawValue }.joined(separator: "")
 
         let activityViewController = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
 
@@ -211,35 +211,35 @@ class ViewController: UIViewController {
             popoverPresentationController.sourceRect = CGRect(x: view.frame.width / 2, y: view.frame.height, width: 0, height: 0)
         }
 
-        self.presentViewController(activityViewController, animated: true, completion: nil)
+        self.present(activityViewController, animated: true, completion: nil)
     }
 
-    @IBAction func speedButton(sender: AnyObject) {
+    @IBAction func speedButton(_ sender: AnyObject) {
         MyUserDefaults.sharedInstance.speed = MyUserDefaults.sharedInstance.speed.next()
-        speedButton.setTitle(MyUserDefaults.sharedInstance.speed.title(), forState: .Normal)
+        speedButton.setTitle(MyUserDefaults.sharedInstance.speed.title(), for: UIControlState())
     }
 
     // MARK: - PasswordPanelLabel
-    @IBOutlet weak private var passwordPanelLabel0: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel1: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel2: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel3: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel4: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel5: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel6: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel7: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel8: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel9: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel10: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel11: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel12: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel13: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel14: PasswordPanelLabel!
-    @IBOutlet weak private var passwordPanelLabel15: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel0: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel1: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel2: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel3: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel4: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel5: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel6: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel7: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel8: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel9: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel10: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel11: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel12: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel13: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel14: PasswordPanelLabel!
+    @IBOutlet weak fileprivate var passwordPanelLabel15: PasswordPanelLabel!
 
-    private var playIndex: Int = 0
+    fileprivate var playIndex: Int = 0
 
-    private func setPasswordPanelLabel(keyCodes: [KeyCode]) {
+    fileprivate func setPasswordPanelLabel(_ keyCodes: [KeyCode]) {
         passwordPanelLabel0.setup(keyCodes[0])
         passwordPanelLabel1.setup(keyCodes[1])
         passwordPanelLabel2.setup(keyCodes[2])
@@ -323,7 +323,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var slashView: KeyboardUnitView!
     @IBOutlet weak var underscoreView: KeyboardUnitView!
 
-    private func setKeyboardUnitViewLabel() {
+    fileprivate func setKeyboardUnitViewLabel() {
         num1View.setup(KeyCode.Num1)
         num2View.setup(KeyCode.Num2)
         num3View.setup(KeyCode.Num3)
@@ -367,7 +367,7 @@ class ViewController: UIViewController {
         slashView.setup(KeyCode.Slash)
 
         switch MyUserDefaults.sharedInstance.keyboardType {
-        case .JIS:
+        case .jis:
             // only JIS
             backslashView.setup(KeyCode.Backslash)
             bracketRightView.setup(KeyCode.BracketRight)
@@ -377,7 +377,7 @@ class ViewController: UIViewController {
             atmarkView.setup(KeyCode.Atmark) // @ or [
             bracketLeftView.setup(KeyCode.BracketLeft) // [ or ]
             colonView.setup(KeyCode.Colon) // : or '
-        case .US:
+        case .us:
             // only US
             usBackquoteView.setup(KeyCode.USBackquote)
             usBackslashView.setup(KeyCode.Backslash)
@@ -389,7 +389,7 @@ class ViewController: UIViewController {
         }
     }
 
-    private func getKeyboardUnitView(keyCode: KeyCode) -> KeyboardUnitView {
+    fileprivate func getKeyboardUnitView(_ keyCode: KeyCode) -> KeyboardUnitView {
         switch keyCode {
         case .Num1:
             return num1View

@@ -9,20 +9,20 @@
 import Foundation
 
 public enum Finger {
-    case Index, Middle, Ring, Pinkie
+    case index, middle, ring, pinkie
 
-    public static let allValues = [Index, Middle, Ring, Pinkie]
+    public static let allValues = [index, middle, ring, pinkie]
 
     // 左手のその指の使用が許可されているかどうか
     public func isAllowedL() -> Bool {
         switch self {
-        case .Index:
+        case .index:
             return MyUserDefaults.sharedInstance.allowIndexFingerL
-        case .Middle:
+        case .middle:
             return MyUserDefaults.sharedInstance.allowMiddleFingerL
-        case .Ring:
+        case .ring:
             return MyUserDefaults.sharedInstance.allowRingFingerL
-        case .Pinkie:
+        case .pinkie:
             return MyUserDefaults.sharedInstance.allowPinkieL
         }
     }
@@ -30,13 +30,13 @@ public enum Finger {
     // 右手のその指の使用が許可されているかどうか
     public func isAllowedR() -> Bool {
         switch self {
-        case .Index:
+        case .index:
             return MyUserDefaults.sharedInstance.allowIndexFingerR
-        case .Middle:
+        case .middle:
             return MyUserDefaults.sharedInstance.allowMiddleFingerR
-        case .Ring:
+        case .ring:
             return MyUserDefaults.sharedInstance.allowRingFingerR
-        case .Pinkie:
+        case .pinkie:
             return MyUserDefaults.sharedInstance.allowPinkieR
         }
     }

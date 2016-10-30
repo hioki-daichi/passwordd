@@ -65,9 +65,9 @@ public enum KeyCode: String {
         var ret = [KeyCode]([.Num1, .Num2, .Num3, .Num4, .Num5, .Num6, .Num7, .Num8, .Num9, .Num0, .Hyphen, .Backslash, .q, .w, .e, .r, .t, .y, .u, .i, .o, .p, .Atmark, .BracketLeft, .a, .s, .d, .f, .g, .h, .j, .k, .l, .Semicolon, .BracketRight, .z, .x, .c, .v, .b, .n, .m, .Comma, .Dot, .Slash])
 
         switch MyUserDefaults.sharedInstance.keyboardType {
-        case .JIS:
+        case .jis:
             ret += [KeyCode]([.Hat, .Colon, .Underscore])
-        case .US:
+        case .us:
             ret += [KeyCode]([.USBackquote, .USEqual, .USSinglequote])
         }
 
@@ -92,25 +92,25 @@ public enum KeyCode: String {
 
     public static let signL: [KeyCode] = {
         switch MyUserDefaults.sharedInstance.keyboardType {
-        case .JIS:
+        case .jis:
             return []
-        case .US:
+        case .us:
             return [.USBackquote]
         }
         }()
 
     public static let signR: [KeyCode] = {
         switch MyUserDefaults.sharedInstance.keyboardType {
-        case .JIS:
+        case .jis:
             return [.Hyphen, .Hat, .Backslash, .Atmark, .BracketLeft, .Semicolon, .Colon, .BracketRight, .Comma, .Dot, .Slash]
-        case .US:
+        case .us:
             return [.Hyphen, .USEqual, .BracketLeft, .BracketRight, .Backslash, .Semicolon, .USSinglequote, .Comma, .Dot]
         }
         }()
 
     public static func generateRandomKeycodes() -> [KeyCode] {
-        var filterL: KeyCode -> Bool = { KeyCode.alphabetL.contains($0) },
-            filterR: KeyCode -> Bool = { KeyCode.alphabetR.contains($0) }
+        var filterL: (KeyCode) -> Bool = { KeyCode.alphabetL.contains($0) },
+            filterR: (KeyCode) -> Bool = { KeyCode.alphabetR.contains($0) }
 
         if MyUserDefaults.sharedInstance.includeNumber {
             let _filterL = filterL
@@ -177,7 +177,7 @@ public enum KeyCode: String {
     public static var receivedKeyCodes: [KeyCode]?
 
     // passwordd://?q=xuapfkdpboxjrpao などで指定された文字列がすべて正しく [KeyCode] に変換できる場合は変換して返す
-    public static func setReceivedKeyCodesFromString(q: String) {
+    public static func setReceivedKeyCodesFromString(_ q: String) {
         var keyCodes = [KeyCode]()
 
         for c in q.characters {
@@ -191,13 +191,13 @@ public enum KeyCode: String {
         }
     }
 
-    private static func getSampleL(keyCodes: [KeyCode]) -> KeyCode {
+    fileprivate static func getSampleL(_ keyCodes: [KeyCode]) -> KeyCode {
         var ret = keyCodes.sample()
         repeat { ret = keyCodes.sample() } while !ret.finger().isAllowedL()
         return ret
     }
 
-    private static func getSampleR(keyCodes: [KeyCode]) -> KeyCode {
+    fileprivate static func getSampleR(_ keyCodes: [KeyCode]) -> KeyCode {
         var ret = keyCodes.sample()
         repeat { ret = keyCodes.sample() } while !ret.finger().isAllowedR()
         return ret
@@ -210,13 +210,13 @@ public enum KeyCode: String {
     public func finger() -> Finger {
         switch self {
         case .Num4, .r, .f, .v, .Num5, .t, .g, .b, .Num6, .y, .h, .n, .Num7, .u, .j, .m:
-            return .Index
+            return .index
         case .Num3, .e, .d, .c, .Num8, .i, .k, .Comma:
-            return .Middle
+            return .middle
         case .Num2, .w, .s, .x, .Num9, .o, .l, .Dot:
-            return .Ring
+            return .ring
         case .Num1, .q, .a, .z, .Num0, .p, .Semicolon, .Slash, .Hyphen, .Atmark, .Colon, .Underscore, .Hat, .BracketLeft, .BracketRight, .Backslash, .USBackquote, .USEqual, .USSinglequote:
-            return .Pinkie
+            return .pinkie
         }
     }
 }
